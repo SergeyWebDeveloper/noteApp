@@ -5,7 +5,7 @@ class Note extends React.Component {
 
     render(){
         return(
-            <div className="note_item">
+            <div className="note_item" style={{backgroundColor: this.props.color}}>
                 <p>{this.props.title}</p>
                 <button className="btn__close material-icons close">close</button>
             </div>
@@ -15,7 +15,8 @@ class Note extends React.Component {
 
 Note.propTypes = {
   id: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired
 };
 
 export default Note;
