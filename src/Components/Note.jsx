@@ -7,7 +7,7 @@ class Note extends React.Component {
         return(
             <div className="note_item" style={{backgroundColor: this.props.color}}>
                 <p>{this.props.title}</p>
-                <button className="btn__close material-icons close">close</button>
+                <button onClick={()=>this.props.deleteNoteId(this.props.id)} className="btn__close material-icons close">close</button>
             </div>
         );
     }
@@ -16,7 +16,8 @@ class Note extends React.Component {
 Note.propTypes = {
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  color: PropTypes.string.isRequired
+  color: PropTypes.string.isRequired,
+  deleteNoteId: PropTypes.func.isRequired
 };
 
 export default Note;
