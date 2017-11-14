@@ -30,7 +30,7 @@ class Note extends React.Component {
 
             <div className="note__edit">
                 <input ref='titleInput' type="text" defaultValue={this.props.title} />
-                <button onClick={this.editTitle}>Исправить</button>
+                <button className="material-icons save" onClick={this.editTitle}>save</button>
             </div>
 
             :

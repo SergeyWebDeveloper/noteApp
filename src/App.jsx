@@ -10,23 +10,7 @@ class App extends React.Component {
     constructor(props){
         super(props);
         this.state={
-            notes: [
-                {
-                    id: 1,
-                    text: 'lorem 1',
-                    color: 'yellow'
-                },
-                {
-                    id: 2,
-                    text: 'lorem 2',
-                    color: 'yellow'
-                },
-                {
-                    id: 3,
-                    text: 'lorem 3',
-                    color: 'yellow'
-                }
-            ]
+            notes: []
         };
         this.handleAddText=this.handleAddText.bind(this);
         this.handleDeleteNote=this.handleDeleteNote.bind(this);
@@ -34,9 +18,10 @@ class App extends React.Component {
     }
 
     handleAddText(obj){
-        let notes=this.state.notes;
+        let notes=this.state.notes.slice();
         notes.push(obj);
         this.setState({notes});
+        // console.log(notes);
     }
 
     handleDeleteNote(id){
@@ -56,12 +41,29 @@ class App extends React.Component {
         this.setState({notes});
     }
 
+    componentDidMount(){
+        this.msnr=new Masonry(this.refs.masonryElem,{
+            itemSelector: '.note_item',
+            columnWidth: 350,
+            gutter: 10
+        });
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        console.log(this.state.notes.length);
+        console.log(prevState.notes.length);
+        if(this.state.notes.length!==prevState.notes.length){
+            this.msnr.reloadItems();
+            this.msnr.layout();
+        }
+    }
+
     render(){
         return(
             <div className="notes__wrapper">
                 <div className="container">
                     <Form noteText={this.handleAddText} />
-                    <div className="notes__container">
+                    <div className="notes__container" ref="masonryElem">
                         {this.state.notes.map((note)=>{
                             return <Note callbackEditNote={this.handleEditNote} deleteNoteId={this.handleDeleteNote} key={note.id} id={note.id} title={note.text} color={note.color} />
                         })}
