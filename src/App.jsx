@@ -30,6 +30,7 @@ class App extends React.Component {
         };
         this.handleAddText=this.handleAddText.bind(this);
         this.handleDeleteNote=this.handleDeleteNote.bind(this);
+        this.handleEditNote=this.handleEditNote.bind(this);
     }
 
     handleAddText(obj){
@@ -45,6 +46,16 @@ class App extends React.Component {
         this.setState({notes});
     }
 
+    handleEditNote(title,id){
+        let notes=this.state.notes.map((note)=>{
+           if(id===note.id){
+               note.text=title;
+           }
+           return note;
+        });
+        this.setState({notes});
+    }
+
     render(){
         return(
             <div className="notes__wrapper">
@@ -52,7 +63,7 @@ class App extends React.Component {
                     <Form noteText={this.handleAddText} />
                     <div className="notes__container">
                         {this.state.notes.map((note)=>{
-                            return <Note deleteNoteId={this.handleDeleteNote} key={note.id} id={note.id} title={note.text} color={note.color} />
+                            return <Note callbackEditNote={this.handleEditNote} deleteNoteId={this.handleDeleteNote} key={note.id} id={note.id} title={note.text} color={note.color} />
                         })}
                     </div>
                 </div>
